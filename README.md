@@ -35,25 +35,25 @@ eventHandler.add("room::message", (data, ws) => {
 eventHandler.del(hello);
 ```
 
-The handler function has 2 arguments, data and WebSocket, you can use the browser developer tool to dig in the socket data.  
+The handler function has 2 arguments, data and WebSocket, you can use the browser developer tool to dig in and find more about the structure of the data sent and received by the socket, or simply log the data.
 There are already a few actions written as examples.
 
 ## License
 
 ```
-    JumpInChat Automated Actions
-    Copyright (C) 2019  Guilherme Caulada (Sighmir)
+JumpInChat Automated Actions
+Copyright (C) 2019  Guilherme Caulada (Sighmir)
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
