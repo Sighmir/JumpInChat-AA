@@ -35,7 +35,7 @@ eventHandler.add("room::message", (data, ws) => {
 eventHandler.del(hello);
 ```
 
-The handler function has 2 arguments, data and WebSocket, you can use the browser developer tool to dig in and find more about the structure of the data sent and received by the socket, or simply log the data.
+The handler function has 2 arguments, data and WebSocket, you can use the browser developer tool to dig in and find more about the structure of the data sent and received by the socket, or simply log the data.  
 There are already a few actions written as examples.
 
 ## License
