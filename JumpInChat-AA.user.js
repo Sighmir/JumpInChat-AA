@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JumpInChat Automated Actions
 // @namespace    https://github.com/Sighmir
-// @version      0.1
+// @version      0.2
 // @description  Automate many actions based on socket events on JumpInChat
 // @author       Sighmir
 // @match        https://jumpin.chat/*
@@ -39,6 +39,9 @@ const eventHandler = {
 
 // == Actions Configuration ===================
 
+// https://www.slickremix.com/docs/get-api-key-for-youtube/
+const ytApiKey = "YouTubeAPI-Key"
+
 const blockedWords = [
     "badword"
 ]
@@ -53,6 +56,36 @@ eventHandler.add("room::message", (data, ws) => {
     }
 });
 
+eventHandler.add("room::message", (data, ws) => {
+    try {
+        console.log(data.message.slice(0, 4))
+        if (data.message.slice(0, 4) == "!yt ") {
+            const link = data.message.split(" ")[1]
+            console.log(link)
+            if (link) {
+                console.log(3)
+                let videoId = null
+                if (link.length === 11) {
+                    videoId = link
+                } else if (link.includes("youtu.be")) {
+                    videoId = link.split("youtu.be/")[1]
+                } else {
+                    videoId = link.split("v=")[1].split("&")[0]
+                }
+
+                console.log(videoId)
+                $.get("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + videoId + "&key=" + ytApiKey, (ytData) => {
+                    console.log(ytData)
+                    const title = ytData.items[0].snippet.title
+                    playYouTube(ws, videoId, title)
+                });
+            }
+        }
+    } catch (err) {
+        sendMessage(ws, "There was a problem trying to play that youtube video. Check your link or video ID.")
+    }
+});
+
 // ============================================
 
 
@@ -60,6 +93,10 @@ eventHandler.add("room::message", (data, ws) => {
 
 
 // == Utility Functions =======================
+
+function playYouTube(ws, videoId, title) {
+    return ws.send(`42["youtube::play",{"videoId":"${videoId}","title":"${title}"}]`);
+}
 
 function sendMessage(ws, message) {
     return ws.send(`42["room::message",{"message":"${message}","room":"${ROOM}"}]`);
