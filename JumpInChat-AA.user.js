@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JumpInChat Automated Actions
 // @namespace    https://github.com/Sighmir
-// @version      0.3
+// @version      0.4
 // @description  Automate many actions based on socket events on JumpInChat
 // @author       Sighmir
 // @match        https://jumpin.chat/*
@@ -61,9 +61,11 @@ const blockedWords = [
     "badword",
 ];
 
-const favoriteVideos = [
-    "videoId",
-];
+const youtubeFavorites = {
+    ["Playlist Name"]: [
+        "videoId",
+    ],
+};
 
 eventHandler.add("room::message", (data, ws) => {
     console.log(data.handle, data.message);
@@ -95,8 +97,9 @@ commandHandler.add("!yt", (data, args, ws) => {
 });
 
 commandHandler.add("!ytfav", async (data, args, ws) => {
-    console.log(favoriteVideos);
-    for (const videoId of favoriteVideos) {
+    const favorites = args.join(" ");
+    if (!youtubeFavorites[favorites]) return sendMessage(ws, "Available favorites: " + Object.keys(youtubeFavorites).join(", "));
+    for (const videoId of youtubeFavorites[favorites]) {
         try {
             playYouTube(ws, videoId);
             await delay(60000);
